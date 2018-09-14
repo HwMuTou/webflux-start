@@ -37,13 +37,13 @@ public class HelloWordController {
     @PutMapping("/{id}")
     public Mono<HelloWord> update(@RequestBody HelloWorkParam param,
                                   @PathVariable Long id) {
-        Mono<HelloWord> helloWordMono = helloWordRepository.findById(id);
-
-        return helloWordMono.flatMap(helloWord -> {
-            helloWord.setValue(param.getValue());
-            helloWord.setName(param.getName());
-            return helloWordRepository.save(helloWord);
-        });
+        return helloWordRepository
+                .findById(id)
+                .flatMap(helloWord -> {
+                    helloWord.setValue(param.getValue());
+                    helloWord.setName(param.getName());
+                    return helloWordRepository.save(helloWord);
+                });
     }
 
     @DeleteMapping("/{id}")
