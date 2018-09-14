@@ -15,10 +15,10 @@ import java.util.Objects;
  * .
  */
 @Data
-public class BaseEntity implements Serializable, Persistable<Long> {
+public class BaseEntity implements Serializable, Persistable<String> {
 
     @Id
-    private Long id;
+    private String id;
 
     @CreatedDate
     private Date createdAt;

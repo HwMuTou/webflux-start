@@ -19,13 +19,16 @@ public class HelloWordController {
         this.helloWordRepository = helloWordRepository;
     }
 
+    /*TODO The stream by MediaType.APPLICATION_STREAM_JSON_VALUE like this
+    * @GetMapping(produces = MediaType.APPLICATION_STREAM_JSON_VALUE)
+    * */
     @GetMapping
     public Flux<HelloWord> index() {
         return helloWordRepository.findAll();
     }
 
     @GetMapping("/{id}")
-    public Mono<HelloWord> show(@PathVariable Long id) {
+    public Mono<HelloWord> show(@PathVariable String id) {
         return helloWordRepository.findById(id);
     }
 
@@ -36,7 +39,7 @@ public class HelloWordController {
 
     @PutMapping("/{id}")
     public Mono<HelloWord> update(@RequestBody HelloWorkParam param,
-                                  @PathVariable Long id) {
+                                  @PathVariable String id) {
         return helloWordRepository
                 .findById(id)
                 .flatMap(helloWord -> {
@@ -47,7 +50,7 @@ public class HelloWordController {
     }
 
     @DeleteMapping("/{id}")
-    public Mono<Void> delete(@PathVariable Long id) {
+    public Mono<Void> delete(@PathVariable String id) {
         return helloWordRepository.deleteById(id);
     }
 }
