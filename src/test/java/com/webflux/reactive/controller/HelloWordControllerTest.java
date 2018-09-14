@@ -5,7 +5,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
-public class HelloWordTest {
+public class HelloWordControllerTest {
 
     @Test
     public void sum() {
