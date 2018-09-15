@@ -4,9 +4,12 @@ import com.webflux.reactive.controller.request.body.HelloWorkParam;
 import com.webflux.reactive.domian.HelloWord;
 import com.webflux.reactive.repository.HelloWordRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+
+import java.time.Duration;
 
 @RestController
 @RequestMapping("/helloWord")
@@ -19,12 +22,20 @@ public class HelloWordController {
         this.helloWordRepository = helloWordRepository;
     }
 
-    /*TODO The stream by MediaType.APPLICATION_STREAM_JSON_VALUE like this
-    * @GetMapping(produces = MediaType.APPLICATION_STREAM_JSON_VALUE)
-    * */
     @GetMapping
     public Flux<HelloWord> index() {
         return helloWordRepository.findAll();
+    }
+
+    /**
+     * Use MediaType.APPLICATION_STREAM_JSON_VALUE Header
+     * 2秒返回一个Object, 直到结束
+     *
+     * @return Flux<HelloWord>
+     */
+    @GetMapping(value = "/steam", produces = MediaType.APPLICATION_STREAM_JSON_VALUE)
+    public Flux<HelloWord> indexDelay() {
+        return helloWordRepository.findAll().delayElements(Duration.ofSeconds(2));
     }
 
     @GetMapping("/{id}")
